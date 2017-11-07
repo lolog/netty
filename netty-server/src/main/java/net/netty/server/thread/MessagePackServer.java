@@ -1,5 +1,7 @@
 package net.netty.server.thread;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,9 +10,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import net.netty.plugins.message.pack.decoder.MessagePackDecoder;
 import net.netty.plugins.message.pack.encoder.MessagePackEncoder;
 import net.netty.server.handler.MessagePackHandler;
@@ -61,7 +62,11 @@ public class MessagePackServer implements Runnable {
 	private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
 		@Override
 		protected void initChannel(SocketChannel ch) throws Exception {
+			// stricky bag
+			ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
 			ch.pipeline().addLast("decoder", new MessagePackDecoder());
+			// stricky bag
+			ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
 			ch.pipeline().addLast("encoder", new MessagePackEncoder());
 			
 			ch.pipeline().addLast(

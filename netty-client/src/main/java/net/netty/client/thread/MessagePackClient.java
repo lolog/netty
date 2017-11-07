@@ -1,5 +1,7 @@
 package net.netty.client.thread;
 
+import java.net.InetSocketAddress;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -7,9 +9,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
-import java.net.InetSocketAddress;
-
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import net.netty.client.handler.MessagePackHanlder;
 import net.netty.plugins.message.pack.decoder.MessagePackDecoder;
 import net.netty.plugins.message.pack.encoder.MessagePackEncoder;
@@ -40,11 +41,15 @@ public class MessagePackClient implements Runnable {
 			.handler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
+					// stricky bag
+					ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
 					ch.pipeline().addLast("decoder", new MessagePackDecoder());
+					// stricky bag
+					ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
 					ch.pipeline().addLast("encoder", new MessagePackEncoder());
 					
 					ch.pipeline().addLast(
-							new MessagePackHanlder()
+							new MessagePackHanlder(10)
 					);
 				}
 			});

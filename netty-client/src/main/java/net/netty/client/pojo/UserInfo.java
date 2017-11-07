@@ -1,6 +1,9 @@
 package net.netty.client.pojo;
 
-public class UserInfo {
+import org.msgpack.annotation.Message;
+
+@Message
+public class UserInfo{
 	private String name;
 	private Integer age;
 	private String company;

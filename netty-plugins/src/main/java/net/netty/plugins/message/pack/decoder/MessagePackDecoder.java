@@ -13,8 +13,8 @@ public class MessagePackDecoder extends MessageToMessageDecoder<ByteBuf> {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf msg,
 			List<Object> out) throws Exception {
-		int length = msg.readableBytes();
-		byte[] arrays = new byte[length];
+		final int length = msg.readableBytes();
+		final byte[] arrays = new byte[length];
 		
 		msg.getBytes(msg.readerIndex(), arrays, 0, length);
 		

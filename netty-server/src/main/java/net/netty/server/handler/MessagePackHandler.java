@@ -12,8 +12,7 @@ public class MessagePackHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		super.exceptionCaught(ctx, cause);
-		ctx.close();
+	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+		ctx.flush();
 	}
 }
