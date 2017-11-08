@@ -1,0 +1,9 @@
+package netty;
+option java_package = "net.netty.plugins.pojo";
+option java_outer_classname = "User";
+
+message UserInfo {
+	required string name = 1;
+	required int32 age = 2;
+	required string info = 3;
+}

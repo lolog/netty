@@ -1,5 +1,7 @@
 package net.netty.server.thread;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,9 +12,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import net.netty.plugins.decoder.message.pack.MessagePackDecoder;
 import net.netty.plugins.encoder.message.pack.MessagePackEncoder;
 import net.netty.server.handler.MessagePackHandler;
