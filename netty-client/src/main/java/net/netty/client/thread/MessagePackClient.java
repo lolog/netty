@@ -1,7 +1,5 @@
 package net.netty.client.thread;
 
-import java.net.InetSocketAddress;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,9 +9,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+
+import java.net.InetSocketAddress;
+
 import net.netty.client.handler.MessagePackHanlder;
-import net.netty.plugins.message.pack.decoder.MessagePackDecoder;
-import net.netty.plugins.message.pack.encoder.MessagePackEncoder;
+import net.netty.plugins.decoder.message.pack.MessagePackDecoder;
+import net.netty.plugins.encoder.message.pack.MessagePackEncoder;
 
 public class MessagePackClient implements Runnable {
 	private String host;

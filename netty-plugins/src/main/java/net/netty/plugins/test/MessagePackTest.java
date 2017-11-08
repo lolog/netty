@@ -1,4 +1,4 @@
-package net.netty.plugins.message.pack;
+package net.netty.plugins.test;
 
 import java.io.IOException;
 import java.util.ArrayList;

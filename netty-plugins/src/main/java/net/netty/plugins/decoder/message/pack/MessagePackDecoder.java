@@ -1,4 +1,4 @@
-package net.netty.plugins.message.pack.decoder;
+package net.netty.plugins.decoder.message.pack;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
