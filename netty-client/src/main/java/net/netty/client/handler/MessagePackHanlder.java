@@ -2,7 +2,7 @@ package net.netty.client.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import net.netty.client.pojo.UserInfo;
+import net.netty.plugins.pojo.People;
 
 public class MessagePackHanlder extends ChannelInboundHandlerAdapter {
 	private int number;
@@ -12,9 +12,9 @@ public class MessagePackHanlder extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("[Client] ----> send message...");
-		UserInfo[] userInfos = createUserInfo();
-		for(UserInfo userInfo: userInfos) {
-			ctx.write(userInfo);
+		People[] peoples = createPeoples();
+		for(People people: peoples) {
+			ctx.write(people);
 		}
 		ctx.flush();
 	}
@@ -35,19 +35,18 @@ public class MessagePackHanlder extends ChannelInboundHandlerAdapter {
 		ctx.close();
 	}
 	
-	private UserInfo[] createUserInfo () {
-		UserInfo[] userInfos = new UserInfo[number];
+	private People[] createPeoples () {
+		People[] peoples = new People[number];
 		
 		for (int i = 0; i < number; i++) {
-			UserInfo userInfo = new UserInfo();
-			userInfo.setName("user_" + i);
-			userInfo.setAge(15+i);
-			userInfo.setCompany("company_" + i);
-			userInfo.setInfo("info_" + i);
+			People people = new People();
+			people.setName("people_" + i);
+			people.setAge(15+i);
+			people.setInfo("info_" + i);
 			
-			userInfos[i] = userInfo;
+			peoples[i] = people;
 		}
 		
-		return userInfos;
+		return peoples;
 	}
 }

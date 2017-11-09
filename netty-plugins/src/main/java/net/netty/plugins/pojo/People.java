@@ -1,15 +1,14 @@
-package net.netty.client.pojo;
+package net.netty.plugins.pojo;
 
-import org.msgpack.annotation.Message;
+import java.io.Serializable;
 
-@Message
-public class UserInfo{
+public class People implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Integer age;
-	private String company;
 	private String info;
-	public UserInfo() {
-		
+	public People() {
+		// TODO Auto-generated constructor stub
 	}
 	public String getName() {
 		return name;
@@ -23,12 +22,6 @@ public class UserInfo{
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	public String getCompany() {
-		return company;
-	}
-	public void setCompany(String company) {
-		this.company = company;
-	}
 	public String getInfo() {
 		return info;
 	}
@@ -37,7 +30,6 @@ public class UserInfo{
 	}
 	@Override
 	public String toString() {
-		return "UserInfo [name=" + name + ", age=" + age + ", company="
-				+ company + ", info=" + info + "]";
+		return "People [name=" + name + ", age=" + age + ", info=" + info + "]";
 	}
 }
