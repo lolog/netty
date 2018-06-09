@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Web Socket JavaScript Echo Client</title>
+<script language="javascript" type="text/javascript">
+	var websocket;
+	var wsUri = "ws://localhost:8080/websocket";
+
+	function createWebsocket() {
+		websocket = new WebSocket(wsUri);
+
+		websocket.onopen = function(evt) {
+			console.log("WebSocket Connected");
+		};
+		websocket.onmessage = function(evt) {
+			console.log("WebSocket Received Message : " + evt.data);
+		};
+		websocket.onerror = function(evt) {
+			console.log('WebSocket Error, ' + evt.data);
+			websocket.close();
+		};
+		websocket.onclose = function() {
+			console.log('WebSocket Closed');
+		};
+	}
+
+	function init() {
+		output = document.getElementById("output");
+		console.log("WebSocket Connected to " + wsUri);
+
+		createWebsocket();
+	}
+
+	function sendMessage() {
+		if (websocket != null && websocket.readyState == 1) {
+			var message = document.getElementById('message');
+			doSend(message.value);
+		} else {
+			createWebsocket();
+		}
+	}
+	function closeWebSocket() {
+		websocket.close();
+	}
+	function doSend(message) {
+		websocket.send(message);
+		console.log("WebSocket Sent message : " + message);
+	}
+	window.addEventListener("load", init, false);
+</script>
+</head>
+<body>
+	<h1>Echo Server</h1>
+	<div style="text-align: left;">
+		<form action="">
+			<input onclick="sendMessage()" value="Send Socket" type="button">
+			<input onclick="closeWebSocket()" value="Close Socket" type="button"><br><br>
+			<input id="message" value="Hello World, Web Sockets"type="text"> <br>
+		</form>
+	</div>
+</body>
+</html>
